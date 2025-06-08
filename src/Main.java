@@ -156,19 +156,13 @@ public class Main {
                                             if (auxLimitCost > 0) {
 
                                                 System.out.println("!#  Unidade Militares    #!");
-                                                System.out.println(auxLimitCost);
+                                                System.out.println("Custo Total: " +auxLimitCost);
                                                 for(int j = 0; j < availabilityUnits.size(); j++) {
-                                                    System.out.println(j + " - " + availabilityUnits.get(j));
+                                                    System.out.println("Unidade " + (j + 1) + ":" + availabilityUnits.get(j));
                                                 }
 
-                                                System.out.println("Escolha a unidade: ");
-                                                System.out.print("==> ");
-                                                positionUnit = sc.nextInt();
-
-                                                if(positionUnit < 0 || positionUnit > availabilityUnits.size()) {
-                                                    System.out.println("Indice invalido");
-                                                    break;
-                                                }
+                                                positionUnit = InputValidation.validateIntGT0(sc, "Escolha uma unidade: ");
+                                                positionUnit -= 1;
 
                                                 MilitaryUnit unity = availabilityUnits.get(positionUnit);
                                                 if(unity.getCost() > auxLimitCost) {
@@ -176,7 +170,6 @@ public class Main {
                                                     break;
                                                 }
                                                 army1.addMilitaryUnit(unity);
-                                                //army1.addMilitaryUnit(units.get(positionUnit));
                                                 availabilityUnits.remove(positionUnit);
                                                 auxLimitCost -= units.get(positionUnit).getCost();
 
@@ -190,15 +183,11 @@ public class Main {
                                                 System.out.println("Não há unidades militares");
                                             } else {
                                                 army1.printMilitaryUnit();
-                                                System.out.println("Escolha a unidade: ");
-                                                System.out.print("==> ");
-                                                positionUnit2 = sc.nextInt();
-                                                if(positionUnit2 < 0 || positionUnit2 > army1.getMilitaryUnit().size()) {
-                                                    System.out.println("Indice invalido");
-                                                    break;
-                                                }
+                                                positionUnit2 = InputValidation.validateIntGT0(sc, "Escolha uma unidade: ");
+                                                positionUnit2 -= 1;
                                                 MilitaryUnit removedUnity = army1.removeMilitaryUnit(positionUnit2);
                                                 availabilityUnits.add(removedUnity);
+                                                auxLimitCost += units.get(positionUnit2).getCost();
                                             }
 
                                             break;
@@ -207,9 +196,9 @@ public class Main {
                                             if (army1.getMilitaryUnit().isEmpty()) {
                                                 System.out.println("Não há unidades militares");
                                             }else{
+                                                System.out.println("Custo Total: " +auxLimitCost);
                                                 army1.printMilitaryUnit();
                                             }
-
                                             break;
 
                                     }
@@ -239,7 +228,7 @@ public class Main {
                                                 System.out.println("!#  Unidade Militares    #!");
                                                 System.out.println(auxLimitCost2);
                                                 for(int j = 0; j < availabilityUnits.size(); j++) {
-                                                    System.out.println(j + " - " + availabilityUnits.get(j));
+                                                    System.out.println("Unidade: " + j + availabilityUnits.get(j));
                                                 }
 
                                                 System.out.println("Escolha a unidade: ");

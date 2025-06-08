@@ -37,22 +37,12 @@ public class Army {
     }
 
     public MilitaryUnit removeMilitaryUnit(int positionUnit) {
-        /*
-        for (int i = 0; i < militaryUnits.size(); i++) {
-            if (militaryUnits.get(i).equals(positionUnit)) {
-                militaryUnits.remove(i);
-                return;
-            }
-        }
-
-         */
         return militaryUnits.remove(positionUnit);
     }
 
     public void printMilitaryUnit() {
-        System.out.println("Limit de custo: " + limitCost);
         for (int i = 0; i < militaryUnits.size(); i++) {
-            System.out.print(i + " - " + militaryUnits.get(i));
+            System.out.println("Unidade " + (i + 1) + ":" + militaryUnits.get(i));
             System.out.println();
         }
         System.out.println("\n");
@@ -61,7 +51,6 @@ public class Army {
     @Override
     public String toString() {
         return "Exercito{" +
-                "\n Limite do custo total: "  + limitCost +
                 "\nUnidade militar: " + militaryUnits;
 
     }

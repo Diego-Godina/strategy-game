@@ -250,4 +250,16 @@ public class MilitaryUnit implements Militarys {
         System.out.println("Velocidade: " + speed);
         System.out.println("Posicao: (" + positionX + ", " + positionY + ")");
     }
+
+    @Override
+    public String toString() {
+        return "\nID: " + id +
+                "\nNome: " + name +
+                "\nCusto: " + cost +
+                "\nPontos de vida: " + lifeScore +
+                "\nPontos de ataque: " + attackPoints +
+                "\nPontos de defesa: " + defensePoints +
+                "\nAlcance: " + range +
+                "\nVelocidade: " + speed;
+    }
 }
