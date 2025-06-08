@@ -178,6 +178,7 @@ public class Main {
                                                 System.out.println("Passou o limite de custos");
                                             }
                                             break;
+
                                         case 2:
                                             System.out.println("!#   2. Remover Unidade       #!");
                                             if (army1.getMilitaryUnit().isEmpty()) {

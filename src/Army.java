@@ -42,10 +42,9 @@ public class Army {
 
     public void printMilitaryUnit() {
         for (int i = 0; i < militaryUnits.size(); i++) {
-            System.out.println("Unidade " + (i + 1) + ":" + militaryUnits.get(i));
+            militaryUnits.get(i).print();
             System.out.println();
         }
-        System.out.println("\n");
     }
 
     @Override
