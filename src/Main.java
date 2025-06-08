@@ -162,10 +162,15 @@ public class Main {
                                                     System.out.println();
                                                 }
 
-                                                positionUnit = InputValidation.validateIntGT0(sc, "Escolha uma unidade: ");
-                                                positionUnit -= 1;
+                                                positionUnit = InputValidation.validateIntBetween(sc, "Escolha uma unidade: ", 1, units.size())-1;
+                                                int indexUnit = selectIdMilitaryUnit(positionUnit);
 
-                                                MilitaryUnit unity = availabilityUnits.get(positionUnit);
+                                                if(indexUnit < 0) {
+                                                    System.out.println("Essa unidade militar não está disponível");
+                                                    break;
+g                                                }
+
+                                                MilitaryUnit unity = availabilityUnits.get(indexUnit);
                                                 if(unity.getCost() > auxLimitCost) {
                                                     System.out.println("Passou o limite do custo");
                                                     break;
