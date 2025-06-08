@@ -5,9 +5,11 @@ import java.util.Scanner;
 public class Warrior extends MilitaryUnit {
     protected int shieldPoints;
 
-    public Warrior(Scanner sc) {
+    public Warrior(Scanner sc, int position) {
         super(sc);
-        shieldPoints = InputValidation.validateIntGT0(sc, "Introduza os pontos de blindagem");
+        shieldPoints = InputValidation.validateIntGT0(sc, "Introduza os pontos de blindagem: ");
+        id = position + 1;
+        name = "Guerreiro " + id;
     }
 
     public void defend(int damage) {

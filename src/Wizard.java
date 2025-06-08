@@ -5,10 +5,12 @@ import java.util.Scanner;
 public class Wizard extends MilitaryUnit {
     protected int maxNumberSpells;
 
-    public Wizard(Scanner sc) {
+    public Wizard(Scanner sc, int position) {
         super(sc);
 
         maxNumberSpells = InputValidation.validateIntGT0(sc, "Introduza a quantidade de feitiços: ");
+        id = position + 1;
+        name = "Feiticeiro " + id;
     }
 
     public void attack(MilitaryUnit militaryUnit) {

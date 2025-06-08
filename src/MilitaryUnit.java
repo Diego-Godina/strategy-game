@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class MilitaryUnit implements Militarys {
+    protected int id;
     protected String name;
     protected int cost;
     protected int lifeScore;
@@ -13,6 +14,10 @@ public class MilitaryUnit implements Militarys {
     protected int positionX;
     protected int positionY;
     protected int speed;
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
 
     public String getName() {
         return name;
@@ -102,7 +107,7 @@ public class MilitaryUnit implements Militarys {
     public MilitaryUnit(Scanner sc) {
         cost = InputValidation.validateIntGT0(sc, "Introduza o custo de produção: ");
         lifeScore = InputValidation.validateIntGT0(sc, "Introduza os pontos de vida: ");
-        attackPoints = InputValidation.validateIntGT0(sc, "Introduza os pontos de vida: ");
+        attackPoints = InputValidation.validateIntGT0(sc, "Introduza os pontos de ataque: ");
         defensePoints = InputValidation.validateIntGT0(sc, "Introduza os pontos de defesa: ");
         range = InputValidation.validateIntGT0(sc, "Introduza o alcance: ");
         speed = InputValidation.validateIntGT0(sc, "Introduza a velocidade: ");
@@ -230,7 +235,12 @@ public class MilitaryUnit implements Militarys {
         System.out.println(":> Exército " + name + " atacou o exército " + militaryUnit.getName());
     }
 
+    public boolean search(int id) {
+        return this.id == id;
+    }
+
     public void print() {
+        System.out.println("ID: " + id);
         System.out.println("Name: " + name);
         System.out.println("Custo: " + cost);
         System.out.println("Pontos de vida: " + lifeScore);

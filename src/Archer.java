@@ -8,7 +8,7 @@ public class Archer extends MilitaryUnit {
     public Archer(Scanner sc) {
         super(sc);
 
-        increaseAttackPoints = InputValidation.validateIntGT0(sc, "Introduza o aumento dos pontos de ataque");
+        increaseAttackPoints = InputValidation.validateIntGT0(sc, "Introduza o aumento dos pontos de ataque: ");
     }
 
     public void attack(MilitaryUnit militaryUnit) {
