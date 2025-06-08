@@ -36,11 +36,11 @@ public class Army {
         System.out.println("Adicionado com sucesso");
     }
 
-    public MilitaryUnit removeMilitaryUnit(int positionUnit) {
-        return militaryUnits.remove(positionUnit);
+    public void removeMilitaryUnit(int positionUnit) {
+         militaryUnits.remove(positionUnit);
     }
 
-    public void printMilitaryUnit() {
+    public void print() {
         for (int i = 0; i < militaryUnits.size(); i++) {
             militaryUnits.get(i).print();
             System.out.println();

@@ -7,13 +7,12 @@ import Utils.InputValidation;
 public class Main {
     private static final ArrayList<MilitaryUnit> units = new ArrayList<>();
     private static final ArrayList<MilitaryUnit> availabilityUnits = new ArrayList<>();
+    private static Army army1 = new Army();
+    private static Army army2 = new Army();
 
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-
-        Army army1 = new Army();
-        Army army2 = new Army();
 
         MilitaryUnit unityToAdd;
 
@@ -173,14 +172,14 @@ public class Main {
                                             System.out.println("!#   2. Remover Unidade       #!");
                                             if (army1.getMilitaryUnit().isEmpty()) {
                                                 System.out.println("Não há unidades militares");
-                                            } else {
-                                                army1.printMilitaryUnit();
-                                                positionUnit2 = InputValidation.validateIntGT0(sc, "Escolha uma unidade: ");
-                                                positionUnit2 -= 1;
-                                                MilitaryUnit removedUnity = army1.removeMilitaryUnit(positionUnit2);
-                                                availabilityUnits.add(removedUnity);
-                                                auxLimitCost += units.get(positionUnit2).getCost();
+                                                break;
                                             }
+                                            unity = validateMilitaryUnitArmy1(sc, "Escolha uma unidade: ");
+                                            positionUnit = selectIdMilitaryUnitsArmy1(unity.getId());
+                                            army1.removeMilitaryUnit(positionUnit);
+                                            auxLimitCost += unity.getCost();
+                                            availabilityUnits.add(unity);
+                                            System.out.println("Unidade militar " + unity.getName() + " removida com sucesso!");
 
                                             break;
 
@@ -188,8 +187,8 @@ public class Main {
                                             if (army1.getMilitaryUnit().isEmpty()) {
                                                 System.out.println("Não há unidades militares");
                                             }else{
-                                                System.out.println("Custo Total: " +auxLimitCost);
-                                                army1.printMilitaryUnit();
+                                                System.out.println("Custo restante: " +auxLimitCost);
+                                                army1.print();
                                             }
                                             break;
 
@@ -208,60 +207,44 @@ public class Main {
                                         case 1:
                                             System.out.println("!#   1. Adicionar Unidade     #!");
                                             if (w == 0) {
-                                                System.out.println("Limite de custos");
-                                                limitCost = sc.nextInt();
+                                                limitCost = InputValidation.validateIntGT0(sc, "Limite de custos: ");
                                                 army2 = new Army(limitCost);
                                                 w++;
                                                 auxLimitCost2 = limitCost;
                                             }
 
-                                            if (auxLimitCost2 > 0) {
-
-                                                System.out.println("!#  Unidade Militares    #!");
-                                                System.out.println(auxLimitCost2);
-                                                for(int j = 0; j < availabilityUnits.size(); j++) {
-                                                    System.out.println("Unidade: " + j + availabilityUnits.get(j));
-                                                }
-
-                                                System.out.println("Escolha a unidade: ");
-                                                System.out.print("==> ");
-                                                positionUnit = sc.nextInt();
-                                                if(positionUnit < 0 || positionUnit > availabilityUnits.size()) {
-                                                    System.out.println("Indice invalido");
-                                                    break;
-                                                }
-
-                                                MilitaryUnit unity = availabilityUnits.get(positionUnit);
-                                                if(unity.getCost() > auxLimitCost2) {
-                                                    System.out.println("Passou o limite do custo");
-                                                    break;
-                                                }
-
-                                                army2.addMilitaryUnit(unity);
-                                                //army2.addMilitaryUnit(units.get(positionUnit));
-                                                availabilityUnits.remove(positionUnit);
-                                                auxLimitCost2 -= units.get(positionUnit).getCost();
-
-                                            } else {
+                                            if(auxLimitCost2 <= 0) {
                                                 System.out.println("Passou o limite de custos");
+                                                break;
                                             }
+
+                                            System.out.println("Custo restante: " + auxLimitCost2);
+
+                                            MilitaryUnit unity = validateMilitaryUnitAvailable(sc, "Escolha uma unidade: ");
+                                            positionUnit = selectIdMilitaryUnitsAvailable(unity.getId());
+
+                                            if(unity.getCost() > auxLimitCost2) {
+                                                System.out.println("Passou o limite do custo");
+                                                break;
+                                            }
+
+                                            army2.addMilitaryUnit(unity);
+                                            auxLimitCost2 -= availabilityUnits.get(positionUnit).getCost();
+                                            availabilityUnits.remove(positionUnit);
                                             break;
+
                                         case 2:
                                             System.out.println("!#   2. Remover Unidade       #!");
-                                            if (army2.getMilitaryUnit().isEmpty()) {
+                                            if (army1.getMilitaryUnit().isEmpty()) {
                                                 System.out.println("Não há unidades militares");
-                                            } else {
-                                                army2.printMilitaryUnit();
-                                                System.out.println("Escolha a unidade: ");
-                                                System.out.print("==> ");
-                                                positionUnit2 = sc.nextInt();
-                                                if(positionUnit2 < 0 || positionUnit2 > army2.getMilitaryUnit().size()) {
-                                                    System.out.println("Indice invalido");
-                                                    break;
-                                                }
-                                                MilitaryUnit removedUnity = army2.removeMilitaryUnit(positionUnit2);
-                                                availabilityUnits.add(removedUnity);
+                                                break;
                                             }
+                                            unity = validateMilitaryUnitArmy2(sc, "Escolha uma unidade: ");
+                                            positionUnit = selectIdMilitaryUnitsArmy2(unity.getId());
+                                            army2.removeMilitaryUnit(positionUnit);
+                                            auxLimitCost2 += unity.getCost();
+                                            availabilityUnits.add(unity);
+                                            System.out.println("Unidade militar " + unity.getName() + " removida com sucesso!");
 
                                             break;
 
@@ -269,7 +252,8 @@ public class Main {
                                             if (army2.getMilitaryUnit().isEmpty()) {
                                                 System.out.println("Não há unidades militares");
                                             }else{
-                                                army2.printMilitaryUnit();
+                                                System.out.println("Custo restante: " +auxLimitCost2);
+                                                army2.print();
                                             }
                                             break;
 
@@ -299,10 +283,8 @@ public class Main {
                                 CombatBoard board = new CombatBoard(sc);
                                 positionXYArmy1 = new int[army1.getMilitaryUnit().size() * 2];
                                 for(int j = 0; j < positionXYArmy1.length; j += 2) {
-                                    System.out.println("Exercito 1 - Posição X Unitdade ");
-                                    positionXYArmy1[j] = sc.nextInt();
-                                    System.out.println("Exercito 1 - Posição Y Unitdade ");
-                                    positionXYArmy1[j+1] = sc.nextInt();
+                                    positionXYArmy1[j] = InputValidation.validateIntBetween(sc, "Exercito 1 - Posição X Unidade ", 0, board.getLimitSizeBoard());
+                                    positionXYArmy1[j] = InputValidation.validateIntBetween(sc, "Exercito 1 - Posição Y Unidade", 0, board.getLimitSizeBoard());
                                 }
                                 board.setPositionArmy1(positionXYArmy1);
                                 do{
@@ -484,6 +466,64 @@ public class Main {
                 sc.nextLine();
             }
         }
+    }
+
+    public static MilitaryUnit validateMilitaryUnitArmy1(Scanner sc, String message) {
+        while (true) {
+            try {
+                int value = InputValidation.validateIntGT0(sc, message);
+
+                for (MilitaryUnit armyMilitaryUnit : army1.getMilitaryUnit()) {
+                    if (armyMilitaryUnit.search(value)) {
+                        return armyMilitaryUnit;
+                    }
+                }
+
+                System.out.println("Introduza o id de uma unidade militar vinculada a esse exercito");
+            } catch (InputMismatchException e) {
+                System.out.println("Introduza o id de uma unidade militar vinculada a esse exercito");
+                sc.nextLine();
+            }
+        }
+    }
+
+    public static int selectIdMilitaryUnitsArmy1(int id) {
+        for (int i = 0; i < army1.getMilitaryUnit().size(); i++) {
+            if(army1.getMilitaryUnit().get(i).search(id)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static MilitaryUnit validateMilitaryUnitArmy2(Scanner sc, String message) {
+        while (true) {
+            try {
+                int value = InputValidation.validateIntGT0(sc, message);
+
+                for (MilitaryUnit armyMilitaryUnit : army2.getMilitaryUnit()) {
+                    if (armyMilitaryUnit.search(value)) {
+                        return armyMilitaryUnit;
+                    }
+                }
+
+                System.out.println("Introduza o id de uma unidade militar vinculada a esse exercito");
+            } catch (InputMismatchException e) {
+                System.out.println("Introduza o id de uma unidade militar vinculada a esse exercito");
+                sc.nextLine();
+            }
+        }
+    }
+
+    public static int selectIdMilitaryUnitsArmy2(int id) {
+        for (int i = 0; i < army2.getMilitaryUnit().size(); i++) {
+            if(army2.getMilitaryUnit().get(i).search(id)) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 }
 

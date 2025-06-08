@@ -1,3 +1,5 @@
+import Utils.InputValidation;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -6,8 +8,7 @@ public class CombatBoard {
     private Army army2;
     private int qtnSteps;
     private int positionChoice;
-    private int coordinateX;
-    private int coordinateY;
+    private int limitSizeBoard;
     private int[] positionArmy1;
     private int[] positionArmy2;
 
@@ -16,23 +17,20 @@ public class CombatBoard {
 
     }
 
-    public CombatBoard(Army army1, Army army2, int qtnSteps, int positionChoice, int coordinateX, int coordinateY, int[] positionArmy1, int[] positionArmy2) {
+    public CombatBoard(Army army1, Army army2, int qtnSteps, int positionChoice, int limitSizeBoard, int[] positionArmy1, int[] positionArmy2) {
         this.army1 = army1;
         this.army2 = army2;
         this.qtnSteps = qtnSteps;
         this.positionChoice = positionChoice;
-        this.coordinateX = coordinateX;
-        this.coordinateY = coordinateY;
+        this.limitSizeBoard = limitSizeBoard;
         this.positionArmy1 = positionArmy1;
         this.positionArmy2 = positionArmy2;
     }
 
     public CombatBoard(Scanner sc) {
         System.out.println("Tabuleiro");
-        System.out.println("Valor maximo da coordenada de X: ");
-        coordinateX = sc.nextInt();
-        System.out.println("Valor maximo da coordenada de Y: ");
-        coordinateY = sc.nextInt();
+        limitSizeBoard = InputValidation.validateIntGT0(sc, "Forneça o tamanho do tabuleiro:");
+
     }
 
     public Army getArmy1() {
@@ -67,23 +65,16 @@ public class CombatBoard {
         this.positionChoice = positionChoice;
     }
 
-    public int getCoordinateX() {
-        return coordinateX;
-    }
-
-    public void setCoordinateX(int coordinateX) {
-        this.coordinateX = coordinateX;
-    }
-
-    public int getCoordinateY() {
-        return coordinateY;
-    }
-
-    public void setCoordinateY(int coordinateY) {
-        this.coordinateY = coordinateY;
-    }
     public int[] getPositionArmy1() {
         return positionArmy1;
+    }
+
+    public int getLimitSizeBoard() {
+        return limitSizeBoard;
+    }
+
+    public void setLimitSizeBoard(int limitSizeBoard) {
+        this.limitSizeBoard = limitSizeBoard;
     }
 
     public void setPositionArmy1(int[] positions) {
@@ -112,8 +103,8 @@ public class CombatBoard {
     public void showState(Army army1) {
         System.out.println("Estado - Tabuleiro");
         positionArmy1 = getPositionArmy1();
-        for(int i = 0; i < getCoordinateY(); i++){
-            for(int j = 0; j < getCoordinateX(); j++){
+        for(int i = 0; i < getLimitSizeBoard(); i++){
+            for(int j = 0; j < getLimitSizeBoard(); j++){
                 for(int k = 0; k < army1.getMilitaryUnit().size(); k++){
                     int X = positionArmy1[k * 2];
                     int Y = positionArmy1[k * 2 + 1];
@@ -128,31 +119,6 @@ public class CombatBoard {
         }
     }
 
-    public void showState2(Army army1) {
-        int b = -1;
-        int a = -1;
-        System.out.println("Estado - Tabuleiro");
-        positionArmy1 = getPositionArmy1();
-        for(int i = 0; i < getCoordinateY(); i++){
-            for(int j = 0; j < getCoordinateX(); j++){
-                for(int k = 0; k < army1.getMilitaryUnit().size(); k++){
-                    int X = positionArmy1[k * 2];
-                    int Y = positionArmy1[k * 2 + 1];
-                    if(i == Y && j == X){
-                        System.out.print("(" + army1.getMilitaryUnit().get(k).getName() + ")");
-                    }else{
-                        if(b != j && a != i){
-                            System.out.print("( " + j + ", " + i + " )");
-                        }
-                        b = j;
-                        a = i;
-                    }
-
-                }
-            }
-            System.out.println();
-        }
-    }
 
     @Override
     public String toString() {
@@ -161,8 +127,7 @@ public class CombatBoard {
                 ", army2=" + army2 +
                 ", qtnSteps=" + qtnSteps +
                 ", positionChoice=" + positionChoice +
-                ", coordinateX=" + coordinateX +
-                ", coordinateY=" + coordinateY +
+                ", limitSizeBoard=" + limitSizeBoard +
                 ", positionArm1" + positionArmy1 +
                 ", positionArm2" + positionArmy2 +
                 '}';
