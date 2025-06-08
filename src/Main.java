@@ -158,7 +158,8 @@ public class Main {
                                                 System.out.println("!#  Unidade Militares    #!");
                                                 System.out.println("Custo Total: " +auxLimitCost);
                                                 for(int j = 0; j < availabilityUnits.size(); j++) {
-                                                    System.out.println("Unidade " + (j + 1) + ":" + availabilityUnits.get(j));
+                                                    availabilityUnits.get(j).print();
+                                                    System.out.println();
                                                 }
 
                                                 positionUnit = InputValidation.validateIntGT0(sc, "Escolha uma unidade: ");
