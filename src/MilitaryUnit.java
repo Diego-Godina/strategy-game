@@ -115,27 +115,27 @@ public class MilitaryUnit implements Militarys {
         positionY = 0;
     }
 
-    public void positionManually(Scanner sc, int limit) {
-        System.out.println("\tIntroduza a posição do exército " + name);
-        positionX = InputValidation.validateIntBetween(sc, "Introduza a posição X: ", 0,limit/2);
-        positionY = InputValidation.validateIntBetween(sc, "Introduza a posição Y: ", 0,limit/2);
+    public void positionManually(Scanner sc, int limitSizeBoard) {
+        System.out.println("\tIntroduza a posição do " + name);
+        positionX = InputValidation.validateIntBetween(sc, "Introduza a posição X: ", 0, limitSizeBoard);
+        positionY = InputValidation.validateIntBetween(sc, "Introduza a posição Y: ", 0, limitSizeBoard);
     }
 
-    public void positionRandom(int limit) {
+    public void positionRandom(int limitSizeBoard) {
         Random rand = new Random();
 
-        positionX = rand.nextInt(limit);
-        positionY = rand.nextInt(limit);
+        positionX = rand.nextInt(limitSizeBoard);
+        positionY = rand.nextInt(limitSizeBoard);
 
         System.out.println(":> Posição do exército " + name + " foi atribuída para (" + positionX + "," + positionY + ")");
     }
 
-    public void move(int limit) {
+    public void move(int limitSizeBoard) {
         Random rand = new Random();
         int d = rand.nextInt(8);
         int max, min, move;
 
-        limit = limit - 1;
+        limitSizeBoard = limitSizeBoard - 1;
         min = 0;
 
         System.out.print(":> Exército " + name + " moveu-se de (" + positionX + ", " + positionY + ") para ");
@@ -143,7 +143,7 @@ public class MilitaryUnit implements Militarys {
         switch (d) {
             // Forward
             case 0:
-                max = (limit - positionY) / speed;
+                max = (limitSizeBoard - positionY) / speed;
                 if (max > 0) {
                     positionY += (rand.nextInt((max - min) + 1) * speed);
                 }
@@ -151,7 +151,7 @@ public class MilitaryUnit implements Militarys {
 
             // Forward diagonally right
             case 1:
-                max = Math.min((limit - positionY) / speed, (limit - positionX) / speed);
+                max = Math.min((limitSizeBoard - positionY) / speed, (limitSizeBoard - positionX) / speed);
                 if (max > 0) {
                     move = rand.nextInt((max - min) + 1);
                     positionY += (move * speed);
@@ -161,7 +161,7 @@ public class MilitaryUnit implements Militarys {
 
             // To right side
             case 2:
-                max = (limit - positionX) / speed;
+                max = (limitSizeBoard - positionX) / speed;
                 if (max > 0) {
                     positionX += (rand.nextInt((max - min) + 1) * speed);
                 }
@@ -169,7 +169,7 @@ public class MilitaryUnit implements Militarys {
 
             // Backward diagonally right
             case 3:
-                max = Math.min(positionY / speed, (limit - positionX) / speed);
+                max = Math.min(positionY / speed, (limitSizeBoard - positionX) / speed);
                 if (max > 0) {
                     move = rand.nextInt((max - min) + 1);
                     positionY -= (move * speed);
@@ -205,7 +205,7 @@ public class MilitaryUnit implements Militarys {
 
             // Forward diagonally left
             case 7:
-                max = Math.min((limit - positionY) / speed, positionX / speed);
+                max = Math.min((limitSizeBoard - positionY) / speed, positionX / speed);
                 if (max > 0) {
                     move = rand.nextInt((max - min) + 1);
                     positionY += (move * speed);

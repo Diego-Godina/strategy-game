@@ -6,31 +6,61 @@ import java.util.Scanner;
 public class CombatBoard {
     private Army army1;
     private Army army2;
-    private int qtnSteps;
-    private int positionChoice;
     private int limitSizeBoard;
-    private int[] positionArmy1;
-    private int[] positionArmy2;
 
-
-    public CombatBoard() {
-
-    }
-
-    public CombatBoard(Army army1, Army army2, int qtnSteps, int positionChoice, int limitSizeBoard, int[] positionArmy1, int[] positionArmy2) {
+    public CombatBoard(Army army1, Army army2, int limitSizeBoard) {
         this.army1 = army1;
         this.army2 = army2;
-        this.qtnSteps = qtnSteps;
-        this.positionChoice = positionChoice;
         this.limitSizeBoard = limitSizeBoard;
-        this.positionArmy1 = positionArmy1;
-        this.positionArmy2 = positionArmy2;
     }
 
     public CombatBoard(Scanner sc) {
-        System.out.println("Tabuleiro");
-        limitSizeBoard = InputValidation.validateIntGT0(sc, "Forneça o tamanho do tabuleiro:");
+        limitSizeBoard = InputValidation.validateIntGT0(sc, "Forneça o tamanho do tabuleiro: ");
+    }
 
+    public int game(Scanner sc) {
+        int qtnSteps = InputValidation.validateIntGT0(sc, "Forneça a quantidade de passos: ");
+        int winner = -1;
+
+        for (int i=0; i < qtnSteps; i++) {
+            army1.moveArmy(limitSizeBoard);
+            army2.moveArmy(limitSizeBoard);
+
+            print();
+
+            winner = checkFinishGame();
+            if(winner != -1) {
+                return checkFinishGame();
+            }
+        }
+
+        System.out.println("Simulação finalizada");
+        return winner;
+    }
+
+    public int checkFinishGame() {
+        /* FALTA
+         * iterar pelo exército 1 e 2 e verificar se há pontos de vida em cada unidade militar,
+         * se não houver retornar 1 caso o exército 1 tenha ganhado
+         * retornar 2 caso o exército 2 tenha ganhado
+         * retornar 3 caso tenha dado empate
+         * retornar -1 caso nenhum dos casos acima tenha acontecido
+         */
+        return -1;
+    }
+
+    public void print() {
+        System.out.println("!######################################!");
+        System.out.println("!#   Estado das unidades militares    #!");
+        System.out.println("!######################################!");
+
+        System.out.println("\t\tExército 1");
+        army1.print();
+
+        System.out.println();
+
+        System.out.println("\t\tExército 2");
+        army2.print();
     }
 
     public Army getArmy1() {
@@ -49,26 +79,6 @@ public class CombatBoard {
         this.army2 = army2;
     }
 
-    public int getQtnSteps() {
-        return qtnSteps;
-    }
-
-    public void setQtnSteps(int qtnSteps) {
-        this.qtnSteps = qtnSteps;
-    }
-
-    public int getPositionChoice() {
-        return positionChoice;
-    }
-
-    public void setPositionChoice(int positionChoice) {
-        this.positionChoice = positionChoice;
-    }
-
-    public int[] getPositionArmy1() {
-        return positionArmy1;
-    }
-
     public int getLimitSizeBoard() {
         return limitSizeBoard;
     }
@@ -77,59 +87,12 @@ public class CombatBoard {
         this.limitSizeBoard = limitSizeBoard;
     }
 
-    public void setPositionArmy1(int[] positions) {
-        this.positionArmy1 = positions;
-    }
-
-    public int[] getPositionArmy2() {
-        return positionArmy2;
-    }
-
-    public void setPositionArmy2(int[] positionArmy2) {
-        this.positionArmy2 = positionArmy2;
-    }
-
-    public int[] getPositionUnityArmy(Scanner sc) {
-        for(int j = 0; j < army1.getMilitaryUnit().size() * 2; j++) {
-            System.out.println("Posição X do exercito 1: ");
-            positionArmy1[j] = sc.nextInt();
-            System.out.println("Posição Y do exercito 1: ");
-            positionArmy1[j+1] = sc.nextInt();
-        }
-        return positionArmy1;
-    }
-
-
-    public void showState(Army army1) {
-        System.out.println("Estado - Tabuleiro");
-        positionArmy1 = getPositionArmy1();
-        for(int i = 0; i < getLimitSizeBoard(); i++){
-            for(int j = 0; j < getLimitSizeBoard(); j++){
-                for(int k = 0; k < army1.getMilitaryUnit().size(); k++){
-                    int X = positionArmy1[k * 2];
-                    int Y = positionArmy1[k * 2 + 1];
-                    if(i == Y && j == X){
-                        System.out.print("(  " + army1.getMilitaryUnit().get(k).getName() + " ) " );
-                        System.out.println("Posicao: ( " + X + ", " + Y + " )");
-                    }
-
-                }
-            }
-            System.out.println();
-        }
-    }
-
-
     @Override
     public String toString() {
         return "CombatBoard{" +
-                "army1=" + army1 +
-                ", army2=" + army2 +
-                ", qtnSteps=" + qtnSteps +
-                ", positionChoice=" + positionChoice +
-                ", limitSizeBoard=" + limitSizeBoard +
-                ", positionArm1" + positionArmy1 +
-                ", positionArm2" + positionArmy2 +
+                "army1 =" + army1 +
+                ", army2 =" + army2 +
+                ", limitSizeBoard =" + limitSizeBoard +
                 '}';
     }
 }

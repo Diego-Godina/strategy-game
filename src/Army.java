@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Army {
     private ArrayList<MilitaryUnit> militaryUnits = new ArrayList<>();
@@ -38,6 +39,33 @@ public class Army {
 
     public void removeMilitaryUnit(int positionUnit) {
          militaryUnits.remove(positionUnit);
+    }
+
+    public void positionArmyManually(Scanner sc, int limitSizeBoard) {
+        for (MilitaryUnit unit : militaryUnits) {
+            unit.positionManually(sc, limitSizeBoard);
+        }
+    }
+
+    public void positionArmyRandom(int limitSizeBoard) {
+        for (MilitaryUnit unit : militaryUnits) {
+            unit.positionRandom(limitSizeBoard);
+        }
+    }
+
+    public void moveArmy(int limitSizeBoard) {
+        for(MilitaryUnit unit : militaryUnits) {
+            unit.move(limitSizeBoard);
+        }
+    }
+
+    public void attackArmy(MilitaryUnit armyToAttack, int limitSizeBoard) {
+        /**
+         * FALTA
+         * Verificar se uma unidade militar está no alcance de todas as outras do outro exército
+         * se estiver no alcance chamar o método attack da unidade militar atacante
+         * e passar como parametro a unidade militar a ser atacada
+         */
     }
 
     public void print() {
