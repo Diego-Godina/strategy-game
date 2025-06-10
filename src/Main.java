@@ -342,12 +342,15 @@ public class Main {
                                 switch (winner) {
                                     case 1:
                                         System.out.println("O exército 1 ganhou a simulação");
+                                        option1 = 0;
                                         break;
                                     case 2:
                                         System.out.println("O exército 2 ganhou a simulação");
+                                        option1 = 0;
                                         break;
                                     case 3:
                                         System.out.println("A simulação terminou empatada");
+                                        option1 = 0;
                                         break;
                                 }
                                 break;
@@ -356,7 +359,7 @@ public class Main {
                     break;
             }
 
-        } while (option1 != 0 || winner == -1);
+        } while (option1 != 0);
 
         sc.close();
     }
