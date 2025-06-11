@@ -12,7 +12,7 @@ public class Archer extends MilitaryUnit {
     }
 
     public void attack(MilitaryUnit militaryUnit) {
-        attackPoints = attackPoints * increaseAttackPoints;
+        attackPointsEffect = attackPoints * increaseAttackPoints;
 
         super.attack(militaryUnit);
     }

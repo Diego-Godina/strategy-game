@@ -13,13 +13,15 @@ public class Warrior extends MilitaryUnit {
     }
 
     public void defend(int damage) {
+        if(lifeScore == 0) return;
+
         if(shieldPoints > 0) {
             if(damage <= shieldPoints) {
                 shieldPoints -= damage;
-                System.out.println("Guerreiro " + name + " perdeu " + damage + " pontos de blindagem");
+                System.out.println(":> Exército " + name + " perdeu " + damage + " pontos de blindagem");
             } else {
-                System.out.println("Guerreiro " + name + " perdeu " + shieldPoints + " pontos de blindagem");
-                damage = damage - shieldPoints;
+                System.out.println(":> Exército " + name + " perdeu " + shieldPoints + " pontos de blindagem");
+                damage -= shieldPoints;
                 shieldPoints = 0;
                 super.defend(damage);
             }

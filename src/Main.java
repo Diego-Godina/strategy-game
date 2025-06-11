@@ -7,8 +7,8 @@ import Utils.InputValidation;
 public class Main {
     private static final ArrayList<MilitaryUnit> units = new ArrayList<>();
     private static final ArrayList<MilitaryUnit> availabilityUnits = new ArrayList<>();
-    private static Army army1 = new Army();
-    private static Army army2 = new Army();
+    private static Army army1;
+    private static Army army2;
 
     public static void main(String[] args) {
 
@@ -17,24 +17,19 @@ public class Main {
         MilitaryUnit unityToAdd;
         CombatBoard combatBoard = null;
 
-        int[] positionXYArmy1;
-        int[] positionXYArmy2;
-
         boolean allMilitaryUnitsPositioned = false;
         boolean combatBoardCreated = false;
 
-        int numberOfUnitis = -1;
         int limitCost;
         int positionUnit;
-        int positionUnit2;
+        int positionUnits;
         int auxLimitCost = -1;
         int auxLimitCost2 = -1;
+        int winner = -1;
+        int limitSizeBoard = 0;
+        int idMilitaryUnit = 0;
         int k = 0;
         int w = 0;
-        int resp = 0;
-        int qtd_passos = -1;
-        int limitSizeBoard = 0;
-        int winner = -1;
 
         int option1 = -1;
         do {
@@ -42,18 +37,12 @@ public class Main {
             option1 = menuPrincipal(sc);
             switch (option1) {
                 case 1:
-                    if (allMilitaryUnitsPositioned) {
-                        System.out.println("Após o posicionamento das unidades militares nada pode ser alterado");
-                        break;
-                    }
-
                     System.out.println("#####1.Unidades Militares######");
                     int option2 = -1;
                     do {
                         //Segundo menu - Unidades Militares
                         option2 = menuUnity(sc);
                         switch (option2) {
-
                             case 1:
                                 System.out.println("#####1.Adiciona Unidade#####");
 
@@ -65,30 +54,34 @@ public class Main {
 
                                         case 1:
                                             System.out.println("######1.Guerreiro#####");
-                                            unityToAdd = new Warrior(sc, units.size());
+                                            unityToAdd = new Warrior(sc, idMilitaryUnit);
                                             units.add(unityToAdd);
                                             availabilityUnits.add(unityToAdd);
+                                            idMilitaryUnit++;
                                             break;
 
                                         case 2:
                                             System.out.println("#####2.Arqueiro (Arco e Flecha)####");
-                                            unityToAdd = new ArcherBowAndArrow(sc, units.size());
+                                            unityToAdd = new ArcherBowAndArrow(sc, idMilitaryUnit);
                                             units.add(unityToAdd);
                                             availabilityUnits.add(unityToAdd);
+                                            idMilitaryUnit++;
                                             break;
 
                                         case 3:
                                             System.out.println("#######3.Arqueiro (Besta)######");
-                                            unityToAdd = new ArcherCrossBow(sc, units.size());
+                                            unityToAdd = new ArcherCrossBow(sc, idMilitaryUnit);
                                             units.add(unityToAdd);
                                             availabilityUnits.add(unityToAdd);
+                                            idMilitaryUnit++;
                                             break;
 
                                         case 4:
                                             System.out.println("#####4.Feiticeiro#####");
-                                            unityToAdd = new Wizard(sc, units.size());
+                                            unityToAdd = new Wizard(sc, idMilitaryUnit);
                                             units.add(unityToAdd);
                                             availabilityUnits.add(unityToAdd);
+                                            idMilitaryUnit++;
                                             break;
                                     }
                                 } while (option3 != 0);
@@ -125,17 +118,11 @@ public class Main {
 
                         }
 
-
                     } while (option2 != 0);
                     break;
 
 
                 case 2:
-                    if (allMilitaryUnitsPositioned) {
-                        System.out.println("Após o posicionamento das tropas nada pode ser alterado");
-                        break;
-                    }
-
                     System.out.println("!#    2. Exercitos            #!");
                     int option4 = -1;
                     do {
@@ -171,6 +158,7 @@ public class Main {
 
                                             MilitaryUnit unity = validateMilitaryUnitAvailable(sc, "Escolha uma unidade: ");
                                             positionUnit = selectIdMilitaryUnitsAvailable(unity.getId());
+                                            positionUnits = selectIdMilitaryUnits(unity.getId());
 
                                             if (unity.getCost() > auxLimitCost) {
                                                 System.out.println("Passou o limite do custo");
@@ -180,6 +168,8 @@ public class Main {
                                             army1.addMilitaryUnit(unity);
                                             auxLimitCost -= availabilityUnits.get(positionUnit).getCost();
                                             availabilityUnits.remove(positionUnit);
+                                            units.remove(positionUnits);
+                                            allMilitaryUnitsPositioned = false;
                                             break;
 
                                         case 2:
@@ -188,11 +178,13 @@ public class Main {
                                                 System.out.println("Não há unidades militares");
                                                 break;
                                             }
+
                                             unity = validateMilitaryUnitArmy1(sc, "Escolha uma unidade: ");
                                             positionUnit = selectIdMilitaryUnitsArmy1(unity.getId());
                                             army1.removeMilitaryUnit(positionUnit);
                                             auxLimitCost += unity.getCost();
                                             availabilityUnits.add(unity);
+                                            units.add(unity);
                                             System.out.println("Unidade militar " + unity.getName() + " removida com sucesso!");
 
                                             break;
@@ -236,6 +228,7 @@ public class Main {
 
                                             MilitaryUnit unity = validateMilitaryUnitAvailable(sc, "Escolha uma unidade: ");
                                             positionUnit = selectIdMilitaryUnitsAvailable(unity.getId());
+                                            positionUnits = selectIdMilitaryUnits(unity.getId());
 
                                             if (unity.getCost() > auxLimitCost2) {
                                                 System.out.println("Passou o limite do custo");
@@ -245,6 +238,8 @@ public class Main {
                                             army2.addMilitaryUnit(unity);
                                             auxLimitCost2 -= availabilityUnits.get(positionUnit).getCost();
                                             availabilityUnits.remove(positionUnit);
+                                            units.remove(positionUnits);
+                                            allMilitaryUnitsPositioned = false;
                                             break;
 
                                         case 2:
@@ -253,11 +248,13 @@ public class Main {
                                                 System.out.println("Não há unidades militares");
                                                 break;
                                             }
+
                                             unity = validateMilitaryUnitArmy2(sc, "Escolha uma unidade: ");
                                             positionUnit = selectIdMilitaryUnitsArmy2(unity.getId());
                                             army2.removeMilitaryUnit(positionUnit);
                                             auxLimitCost2 += unity.getCost();
                                             availabilityUnits.add(unity);
+                                            units.add(unity);
                                             System.out.println("Unidade militar " + unity.getName() + " removida com sucesso!");
 
                                             break;
@@ -274,7 +271,6 @@ public class Main {
                                     }
                                 } while (option6 != 0);
                                 break;
-
 
                         }
                     } while (option4 != 0);
@@ -342,23 +338,24 @@ public class Main {
                                 switch (winner) {
                                     case 1:
                                         System.out.println("O exército 1 ganhou a simulação");
-                                        option1 = 0;
                                         break;
                                     case 2:
                                         System.out.println("O exército 2 ganhou a simulação");
-                                        option1 = 0;
                                         break;
                                     case 3:
                                         System.out.println("A simulação terminou empatada");
-                                        option1 = 0;
                                         break;
+                                }
+
+                                if(winner != -1) {
+                                    option1 = 0;
+                                    option7 = 0;
                                 }
                                 break;
                         }
                     } while (option7 != 0);
                     break;
             }
-
         } while (option1 != 0);
 
         sc.close();

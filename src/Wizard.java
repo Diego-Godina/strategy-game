@@ -14,7 +14,7 @@ public class Wizard extends MilitaryUnit {
     }
 
     public void attack(MilitaryUnit militaryUnit) {
-        if(maxNumberSpells <= 0) return;
+        if(maxNumberSpells <= 0 || lifeScore <= 0 || militaryUnit.getLifeScore() <= 0) return;
 
         super.attack(militaryUnit);
         maxNumberSpells--;

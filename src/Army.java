@@ -6,12 +6,9 @@ public class Army {
     private int limitCost;
     String nameUnit = null;
     int positionUnit;
+
     public Army(int limitCost) {
         this.limitCost = limitCost;
-    }
-
-    public Army() {
-
     }
 
     public ArrayList<MilitaryUnit> getMilitaryUnit() {
@@ -31,8 +28,6 @@ public class Army {
     }
 
     public void addMilitaryUnit(MilitaryUnit unit) {
-        //Cada unidade militar será adicionada a uma lista de Unidades militares
-        //E uma lista de uma ou mais unidade compoêm um exercito
         militaryUnits.add(unit);
         System.out.println("Adicionado com sucesso");
     }
@@ -59,8 +54,8 @@ public class Army {
         }
     }
 
-    public void attackArmy(Army armyToAttack, int limitSizeBoard) {
-        for(MilitaryUnit unit : this.militaryUnits) {
+    public void attackArmy(Army armyToAttack) {
+        for(MilitaryUnit unit : militaryUnits) {
             for(MilitaryUnit unit2 : armyToAttack.getMilitaryUnit()) {
                 int rangeToCalc = Math.abs(unit.getPositionX() - unit2.getPositionX()) + Math.abs(unit.getPositionY() - unit2.getPositionY());
                 if(rangeToCalc <= unit.getRange()) {
@@ -68,18 +63,13 @@ public class Army {
                 }
             }
         }
-
-        /**
-         * FALTA
-         * Verificar se uma unidade militar está no alcance de todas as outras do outro exército
-         * se estiver no alcance chamar o método attack da unidade militar atacante
-         * e passar como parametro a unidade militar a ser atacada
-         */
     }
 
     public void print() {
-        for (int i = 0; i < militaryUnits.size(); i++) {
-            militaryUnits.get(i).print();
+        for (MilitaryUnit militaryUnit : militaryUnits) {
+            if(militaryUnit.getLifeScore() <= 0) continue;
+
+            militaryUnit.print();
             System.out.println();
         }
     }

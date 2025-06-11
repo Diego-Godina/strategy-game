@@ -14,6 +14,7 @@ public class MilitaryUnit implements Militarys {
     protected int positionX;
     protected int positionY;
     protected int speed;
+    protected int attackPointsEffect;
 
     public int getId() { return id; }
 
@@ -91,19 +92,6 @@ public class MilitaryUnit implements Militarys {
         this.speed = speed;
     }
 
-    /* ACHO QUE NÃO VAMOS PRECISAR
-    public MilitaryUnit(String name, int cost, int lifeScore, int attackPoints, int defensePoints, int range, int speed) {
-        this.name = name;
-        this.cost = cost;
-        this.lifeScore = lifeScore;
-        this.attackPoints = attackPoints;
-        this.defensePoints = defensePoints;
-        this.range = range;
-        this.speed = speed;
-        this.positionX = 0;
-        this.positionY = 0;
-    }*/
-
     public MilitaryUnit(Scanner sc) {
         cost = InputValidation.validateIntGT0(sc, "Introduza o custo de produção: ");
         lifeScore = InputValidation.validateIntGT0(sc, "Introduza os pontos de vida: ");
@@ -113,6 +101,7 @@ public class MilitaryUnit implements Militarys {
         speed = InputValidation.validateIntGT0(sc, "Introduza a velocidade: ");
         positionX = 0;
         positionY = 0;
+        attackPointsEffect = attackPoints;
     }
 
     public void positionManually(Scanner sc, int limitSizeBoard) {
@@ -131,12 +120,14 @@ public class MilitaryUnit implements Militarys {
     }
 
     public void move(int limitSizeBoard) {
+        if(lifeScore <= 0) return;
+
         Random rand = new Random();
         int d = rand.nextInt(8);
         int max, min, move;
 
         limitSizeBoard = limitSizeBoard - 1;
-        min = 0;
+        min = 1;
 
         System.out.print(":> Exército " + name + " moveu-se de (" + positionX + ", " + positionY + ") para ");
 
@@ -218,28 +209,36 @@ public class MilitaryUnit implements Militarys {
     }
 
     public void defend(int damage) {
-        if(defensePoints == 0) return;
+        if(lifeScore == 0) return;
 
         if(damage <= defensePoints) {
             defensePoints -= damage;
             System.out.println(":> Exército " + name + " perdeu " + damage + " pontos de defesa");
-        } else{
+        } else {
             System.out.println(":> Exército " + name + " perdeu " + defensePoints + " pontos de defesa");
+            damage -= defensePoints;
             defensePoints = 0;
+
+            if(damage <= lifeScore) {
+                lifeScore -= damage;
+                System.out.println(":> Exército " + name + " perdeu " + damage + " pontos de vida");
+            } else {
+                System.out.println(":> Exército " + name + " perdeu " + lifeScore + " pontos de vida");
+                lifeScore = 0;
+            }
         }
 
-        if(defensePoints == 0 && damage <= lifeScore) {
-            System.out.println(":> Exército " + name + " perdeu " + damage + " pontos de vida");
-        }else if(damage > lifeScore) {
-            System.out.println(":> Exército " + name + " perdeu " + lifeScore + " pontos de vida");
-            lifeScore = 0;
+        if(lifeScore == 0) {
+            System.out.println(":> Exército " + name + " faleceu...");
         }
     }
 
     public void attack(MilitaryUnit militaryUnit) {
-        militaryUnit.defend(attackPoints);
+        if(lifeScore <= 0 || militaryUnit.getLifeScore() <= 0) return;
 
-        System.out.println(":> Exército " + name + " atacou o exército " + militaryUnit.getName());
+        System.out.println(":> Exército " + name + " atacou o exército " + militaryUnit.getName() + " com " + attackPointsEffect + " pontos de ataque");
+
+        militaryUnit.defend(attackPointsEffect);
     }
 
     public boolean search(int id) {
