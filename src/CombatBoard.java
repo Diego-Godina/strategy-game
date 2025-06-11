@@ -25,6 +25,8 @@ public class CombatBoard {
         for (int i=0; i < qtnSteps; i++) {
             army1.moveArmy(limitSizeBoard);
             army2.moveArmy(limitSizeBoard);
+            army1.attackArmy(army2, limitSizeBoard);
+            army2.attackArmy(army1, limitSizeBoard);
 
             print();
 
@@ -39,6 +41,26 @@ public class CombatBoard {
     }
 
     public int checkFinishGame() {
+         int pointScore1 = 0;
+         int pointScore2 = 0;
+        for (int i = 0; i < army1.getMilitaryUnit().size(); i++) {
+            pointScore1 = army1.getMilitaryUnit().get(i).lifeScore;
+        }
+
+        for(int j = 0; j < army2.getMilitaryUnit().size(); j++) {
+            pointScore2 = army2.getMilitaryUnit().get(j).lifeScore;
+        }
+
+        if(pointScore1 > 0 && pointScore2 == 0 ) {
+            return 1;
+        }else if(pointScore1 == 0 && pointScore2 > 0) {
+            return 2;
+        }if(pointScore1 == pointScore2) {
+            return 3;
+        }else{
+            return -1;
+        }
+
         /* FALTA
          * iterar pelo exército 1 e 2 e verificar se há pontos de vida em cada unidade militar,
          * se não houver retornar 1 caso o exército 1 tenha ganhado
@@ -46,7 +68,6 @@ public class CombatBoard {
          * retornar 3 caso tenha dado empate
          * retornar -1 caso nenhum dos casos acima tenha acontecido
          */
-        return -1;
     }
 
     public void print() {

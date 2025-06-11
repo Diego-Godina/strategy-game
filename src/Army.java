@@ -59,7 +59,16 @@ public class Army {
         }
     }
 
-    public void attackArmy(MilitaryUnit armyToAttack, int limitSizeBoard) {
+    public void attackArmy(Army armyToAttack, int limitSizeBoard) {
+        for(MilitaryUnit unit : this.militaryUnits) {
+            for(MilitaryUnit unit2 : armyToAttack.getMilitaryUnit()) {
+                int rangeToCalc = Math.abs(unit.getPositionX() - unit2.getPositionX()) + Math.abs(unit.getPositionY() - unit2.getPositionY());
+                if(rangeToCalc <= unit.getRange()) {
+                    unit.attack(unit2);
+                }
+            }
+        }
+
         /**
          * FALTA
          * Verificar se uma unidade militar está no alcance de todas as outras do outro exército

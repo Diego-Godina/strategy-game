@@ -223,9 +223,16 @@ public class MilitaryUnit implements Militarys {
         if(damage <= defensePoints) {
             defensePoints -= damage;
             System.out.println(":> Exército " + name + " perdeu " + damage + " pontos de defesa");
-        } else {
+        } else{
             System.out.println(":> Exército " + name + " perdeu " + defensePoints + " pontos de defesa");
             defensePoints = 0;
+        }
+
+        if(defensePoints == 0 && damage <= lifeScore) {
+            System.out.println(":> Exército " + name + " perdeu " + damage + " pontos de vida");
+        }else if(damage > lifeScore) {
+            System.out.println(":> Exército " + name + " perdeu " + lifeScore + " pontos de vida");
+            lifeScore = 0;
         }
     }
 
