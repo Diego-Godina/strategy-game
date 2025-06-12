@@ -1,6 +1,5 @@
 import Utils.InputValidation;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CombatBoard {
@@ -14,11 +13,14 @@ public class CombatBoard {
         this.limitSizeBoard = limitSizeBoard;
     }
 
-    /*
-    Dá ínicio ao combate. Chama os métodos para mover as unidades de cada exercíto, de modo que a cada passo dado os exercitos
-    ou as unidades se movam e também é chamada os métodos de ataque, assim sempre que a unidade alvo estiver no alcance da unidade
-    atacante poderá efetuar um ataque.
-    */
+    /**
+     * It starts the combat.
+     * It calls the methods to move the units of each army, so that with each step taken the armies or units move and it also calls the attack methods,
+     * so that whenever the target unit is within range of the attacking unit it can carry out an attack.
+     *
+     * @param sc
+     * @return
+     */
     public int game(Scanner sc) {
         int qtnSteps = InputValidation.validateIntGT0(sc, "Forneça a quantidade de passos: ");
         int winner = -1;
@@ -42,12 +44,13 @@ public class CombatBoard {
         return winner;
     }
 
-    /*
-    Verifica o estado do jogo, primeiro verificando se uma ou, as duas unidades têm vida ou até se nenhuma
-    tem vida. Se uma tiver vida é a vencedora o jogo termina, se os dois exercitos tiverem o mesmo numero de vida
-    terminam empatados e o jogo termina se os dois exercitos ainda tiver vida e o número de passos terminar, o utilizador
-    pode adicionar mais passos.
-    */
+    /**
+     * Check the game status, first checking if one or both units have life or even if neither has life.
+     * If one has life, it is the winner and the game ends. If both armies have the same number of life,
+     * they end in a draw and the game ends. If both armies still have life and the number of steps ends, the user can add more steps.
+     *
+     * @return
+     */
     public int checkFinishGame() {
          int pointScore1 = 0;
          int pointScore2 = 0;
@@ -71,7 +74,10 @@ public class CombatBoard {
          return -1;
     }
 
-    //Imprimi ou apresenta o estado das unidades dos dois exercitos
+    /**
+     * Print or display the status of the units of both armies
+     *
+     */
     public void print() {
         System.out.println("!######################################!");
         System.out.println("!#   Estado das unidades militares    #!");

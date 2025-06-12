@@ -104,18 +104,24 @@ public class MilitaryUnit implements Militarys {
         attackPointsEffect = attackPoints;
     }
 
-    /*
-     Posiciona manualmente as unidades militares no tabuleiro de combate, sempre considerando o limite do tabuleiro,
-     de forma a evitar que alguma unidade passe o limite do tabuleiro.
-    */
-
+    /**
+     * Manually positions military units on the combat board, always considering the board's border,
+     * in order to prevent any unit from crossing the board's border.
+     *
+     * @param sc
+     * @param limitSizeBoard
+     */
     public void positionManually(Scanner sc, int limitSizeBoard) {
         System.out.println("\tIntroduza a posição do " + name);
         positionX = InputValidation.validateIntBetween(sc, "Introduza a posição X: ", 0, limitSizeBoard);
         positionY = InputValidation.validateIntBetween(sc, "Introduza a posição Y: ", 0, limitSizeBoard);
     }
 
-    //Pega as posições X e Y aleatoriamente.
+    /**
+     * Sets the X and Y positions randomly.
+     *
+     * @param limitSizeBoard
+     */
     public void positionRandom(int limitSizeBoard) {
         Random rand = new Random();
 
@@ -124,13 +130,16 @@ public class MilitaryUnit implements Militarys {
 
         System.out.println(":> Posição do exército " + name + " foi atribuída para (" + positionX + "," + positionY + ")");
     }
-    /*
-    Move todas as unidades militares aleatoriamente para uma direção num intervalo de 0 a 7 sendo,
-    0 para frente, 1 para frente na diagonal direita, 2 para o lado direito, 3 para trás na diagonal direita,
-    4 para trás, 5 para trás na diagonal esquerda, 6 para o lado esquerdo, 7 para frente para diagonal esquerda
-    Ao se movimentar para uma determinada direção, será calculado a nova posição, levando em conta a velocidade de cada
-    unidade militar.
-    */
+
+    /**
+     * Moves all military units randomly to a direction in a range from 0 to 7, being,
+     * 0 forward, 1 forward diagonally right, 2 to the right side, 3 backward diagonally right,
+     * 4 backward, 5 backward diagonally left, 6 to the left side, 7 forward diagonally left
+     * When moving in a certain direction, the new position will be calculated, taking into account the speed of each
+     * military unit.
+     *
+     * @param limitSizeBoard
+     */
     public void move(int limitSizeBoard) {
         if(lifeScore <= 0) return;
 
@@ -220,12 +229,14 @@ public class MilitaryUnit implements Militarys {
         System.out.println("(" + positionX + ", " + positionY + ")");
     }
 
-    /*
-     Chamado sempre que uma unidade atacar outra. Primeiro é retirado apenas os pontos de defesa, e caso chegar a zero é retirado
-     os pontos de ataque. O Damage mesmo sendo inicialmente os pontos de ataque total, no caso dos pontos de defesa serem inferior
-     ao Damage, o valor restante do ataque é descontado nos pontos de vida.
-    */
-
+    /**
+     * Called whenever a unit attacks another.
+     * First, only the defense points are removed, and if they reach zero, the attack points are removed.
+     * Even though the Damage is initially the total attack points, if the defense points are lower than the Damage,
+     * the remaining value of the attack is discounted from the life points.
+     *
+     * @param damage
+     */
     public void defend(int damage) {
         if(lifeScore == 0) return;
 
@@ -251,10 +262,12 @@ public class MilitaryUnit implements Militarys {
         }
     }
 
-    /*
-    Chamada quando uma unidade ataca a outra e passa para o metodo defend() os pontos de ataque, os quais reduzem
-    primeiro os pontos de blindagem se for um guerreiro, depois os pontos de defesa e por fim os pontos de vida
-    */
+    /**
+     * Called when a unit attacks another and passes the attack points to the defend() method, which reduce
+     * first the armor points if it is a warrior, then the defense points and finally the life points
+     *
+     * @param militaryUnit
+     */
     public void attack(MilitaryUnit militaryUnit) {
         if(lifeScore <= 0 || militaryUnit.getLifeScore() <= 0) return;
 
@@ -263,12 +276,14 @@ public class MilitaryUnit implements Militarys {
         militaryUnit.defend(attackPointsEffect);
     }
 
-
     public boolean search(int id) {
         return this.id == id;
     }
 
-    //Imprimi as informações referente as unidades militares.
+    /**
+     * Print information regarding military units.
+     *
+     */
     public void print() {
         System.out.println("ID: " + id);
         System.out.println("Name: " + name);

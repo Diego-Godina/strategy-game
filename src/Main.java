@@ -461,9 +461,12 @@ public class Main {
         return InputValidation.validateIntBetween(sc, "=> ", 0, 3);
     }
 
-    /*
-    Itera sobre todas as unidades militares disponíveis, procura pelo ID e retorna o índice.
-    */
+    /**
+     * Iterates over all available military units, looks for the ID and returns the index.
+     *
+     * @param id
+     * @return
+     */
     public static int selectIdMilitaryUnitsAvailable(int id) {
         for (int i = 0; i < availabilityUnits.size(); i++) {
             if(availabilityUnits.get(i).search(id)) {
@@ -474,9 +477,12 @@ public class Main {
         return -1;
     }
 
-    /*
-   Itera sobre todas as unidades militares, procura pelo ID e retorna o índice.
-   */
+    /**
+     * Iterates over all military units, looks for the ID and returns the index.
+     *
+     * @param id
+     * @return
+     */
     public static int selectIdMilitaryUnits(int id) {
         for (int i = 0; i < units.size(); i++) {
             if(units.get(i).search(id)) {
@@ -487,9 +493,13 @@ public class Main {
         return -1;
     }
 
-    /*
-   Valida se o ID escolhido pelo utilizador pertence a alguma unidade militar existente.
-   */
+    /**
+     * Validates whether the ID chosen by the user belongs to any existing military unit.
+     *
+     * @param sc
+     * @param message
+     * @return
+     */
     public static MilitaryUnit validateMilitaryUnit(Scanner sc, String message) {
         while (true) {
             try {
@@ -509,9 +519,13 @@ public class Main {
         }
     }
 
-    /*
-    Valida se o ID escolhido pelo utilizador pertence a alguma unidade militar existente.
-    */
+    /**
+     * Validates whether the ID chosen by the user belongs to any existing military unit.
+     *
+     * @param sc
+     * @param message
+     * @return
+     */
     public static MilitaryUnit validateMilitaryUnitAvailable(Scanner sc, String message) {
         while (true) {
             try {
@@ -531,9 +545,13 @@ public class Main {
         }
     }
 
-    /*
-    Valida se o ID escolhido pelo utilizador pertence a alguma unidade militar vinculada ao exercíto 1.
-    */
+    /**
+     * Validates whether the ID chosen by the user belongs to any military unit linked to army 1.
+     *
+     * @param sc
+     * @param message
+     * @return
+     */
     public static MilitaryUnit validateMilitaryUnitArmy1(Scanner sc, String message) {
         while (true) {
             try {
@@ -553,9 +571,12 @@ public class Main {
         }
     }
 
-    /*
-    Itera sobre todas as unidades militares do exercito 1, procura pelo ID e retorna o índice.
-    */
+    /**
+     * Iterates over all military units in army 1, searches for the ID and returns the index.
+     *
+     * @param id
+     * @return
+     */
     public static int selectIdMilitaryUnitsArmy1(int id) {
         for (int i = 0; i < army1.getMilitaryUnit().size(); i++) {
             if(army1.getMilitaryUnit().get(i).search(id)) {
@@ -566,9 +587,13 @@ public class Main {
         return -1;
     }
 
-    /*
-    Valida se o ID escolhido pelo utilizador pertence a alguma unidade militar vinculada ao exercíto 2.
-    */
+    /**
+     * Validates whether the ID chosen by the user belongs to any military unit linked to army 2.
+     *
+     * @param sc
+     * @param message
+     * @return
+     */
     public static MilitaryUnit validateMilitaryUnitArmy2(Scanner sc, String message) {
         while (true) {
             try {
@@ -588,9 +613,12 @@ public class Main {
         }
     }
 
-    /*
-    Itera sobre todas as unidades militares do exercito 2, procura pelo ID e retorna o índice.
-    */
+    /**
+     * Iterates over all military units in army 2, searches for the ID and returns the index.
+     *
+     * @param id
+     * @return
+     */
     public static int selectIdMilitaryUnitsArmy2(int id) {
         for (int i = 0; i < army2.getMilitaryUnit().size(); i++) {
             if(army2.getMilitaryUnit().get(i).search(id)) {

@@ -4,9 +4,12 @@ import java.util.Scanner;
 public class Army {
     private ArrayList<MilitaryUnit> militaryUnits = new ArrayList<>();
     private int limitCost;
-    String nameUnit = null;
-    int positionUnit;
 
+    /**
+     * Army constructor
+     *
+     * @param limitCost
+     */
     public Army(int limitCost) {
         this.limitCost = limitCost;
     }
@@ -27,50 +30,69 @@ public class Army {
         this.limitCost = limitCost;
     }
 
-    //Adiciona as unidades militares em um Array List
+    /**
+     * Adds military units to an Array List
+     *
+     * @param unit
+     */
     public void addMilitaryUnit(MilitaryUnit unit) {
         militaryUnits.add(unit);
         System.out.println("Adicionado com sucesso");
     }
 
-    //Removi as unidades militares a partir da posição
+    /**
+     * Removes military units from the position
+     *
+     * @param positionUnit
+     */
     public void removeMilitaryUnit(int positionUnit) {
          militaryUnits.remove(positionUnit);
     }
 
-    /*
-    Itera por todas as unidades de determinado exercito, envia o limite do tabuleiro anteriormente fornecido pelo utilizador
-    e envia para o metodo que guarda as duas posições fornecidas pelo utilizador
-    */
+    /**
+     * Iterates through all units of a given army, sends the board limit previously provided by the user
+     * and sends it to the method that saves the two positions provided by the user
+     *
+     * @param sc
+     * @param limitSizeBoard
+     */
     public void positionArmyManually(Scanner sc, int limitSizeBoard) {
         for (MilitaryUnit unit : militaryUnits) {
             unit.positionManually(sc, limitSizeBoard);
         }
     }
 
-    /*
-    Itera por todas as unidades de um exercíto, envia o limite do tabuleiro fornecido anteriormente para o metodo
-    onde será gerado as posições aleatoriamente.
-    */
+    /**
+     * Iterates through all units of an army, sends the previously provided board limit to the method
+     * where the positions will be generated randomly.
+     *
+     * @param limitSizeBoard
+     */
     public void positionArmyRandom(int limitSizeBoard) {
         for (MilitaryUnit unit : militaryUnits) {
             unit.positionRandom(limitSizeBoard);
         }
     }
 
-    //Itera por todas as unidades e chama o metodo que faz cada unidade se mover para diferentes direções.
+    /**
+     * Iterates through all units and calls the method that makes each unit move in different directions.
+     *
+     * @param limitSizeBoard
+     */
     public void moveArmy(int limitSizeBoard) {
         for(MilitaryUnit unit : militaryUnits) {
             unit.move(limitSizeBoard);
         }
     }
 
-    /*
-    O primeiro for itera as unidades militares atacante e o segundo itera as unidades militares alvo. Antes do ataque é
-    calculado o alcance que é a soma das diferenças absoluta entre a unidade atacante e a unidade alvo e caso o alvo estiver
-    no alcance, ou seja, o valor do alcance calculado é menor ou igual a valor do alcance dado a unidade atacante, então a unidade
-    atacante pode atacar.
-    */
+    /**
+     * The first for loop iterates the attacking military units and the second loop iterates the target military units.
+     * Before the attack, the range is calculated, which is the sum of the absolute differences between the attacking unit and the target unit.
+     * If the target is in range, that is, the calculated range value is less than or equal to the range value given to the attacking unit,
+     * then the attacking unit can attack.
+     *
+     * @param armyToAttack
+     */
     public void attackArmy(Army armyToAttack) {
         for(MilitaryUnit unit : militaryUnits) {
             for(MilitaryUnit unit2 : armyToAttack.getMilitaryUnit()) {
@@ -82,7 +104,10 @@ public class Army {
         }
     }
 
-    //Imprimi as informações ou os dados das unidades militares.
+    /**
+     * Print the information or data of the military units.
+     *
+     */
     public void print() {
         for (MilitaryUnit militaryUnit : militaryUnits) {
             if(militaryUnit.getLifeScore() <= 0) continue;
