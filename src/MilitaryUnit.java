@@ -104,12 +104,18 @@ public class MilitaryUnit implements Militarys {
         attackPointsEffect = attackPoints;
     }
 
+    /*
+     Posiciona manualmente as unidades militares no tabuleiro de combate, sempre considerando o limite do tabuleiro,
+     de forma a evitar que alguma unidade passe o limite do tabuleiro.
+    */
+
     public void positionManually(Scanner sc, int limitSizeBoard) {
         System.out.println("\tIntroduza a posição do " + name);
         positionX = InputValidation.validateIntBetween(sc, "Introduza a posição X: ", 0, limitSizeBoard);
         positionY = InputValidation.validateIntBetween(sc, "Introduza a posição Y: ", 0, limitSizeBoard);
     }
 
+    //Pega as posições X e Y aleatoriamente.
     public void positionRandom(int limitSizeBoard) {
         Random rand = new Random();
 
@@ -118,7 +124,13 @@ public class MilitaryUnit implements Militarys {
 
         System.out.println(":> Posição do exército " + name + " foi atribuída para (" + positionX + "," + positionY + ")");
     }
-
+    /*
+    Move todas as unidades militares aleatoriamente para uma direção num intervalo de 0 a 7 sendo,
+    0 para frente, 1 para frente na diagonal direita, 2 para o lado direito, 3 para trás na diagonal direita,
+    4 para trás, 5 para trás na diagonal esquerda, 6 para o lado esquerdo, 7 para frente para diagonal esquerda
+    Ao se movimentar para uma determinada direção, será calculado a nova posição, levando em conta a velocidade de cada
+    unidade militar.
+    */
     public void move(int limitSizeBoard) {
         if(lifeScore <= 0) return;
 
@@ -208,6 +220,12 @@ public class MilitaryUnit implements Militarys {
         System.out.println("(" + positionX + ", " + positionY + ")");
     }
 
+    /*
+     Chamado sempre que uma unidade atacar outra. Primeiro é retirado apenas os pontos de defesa, e caso chegar a zero é retirado
+     os pontos de ataque. O Damage mesmo sendo inicialmente os pontos de ataque total, no caso dos pontos de defesa serem inferior
+     ao Damage, o valor restante do ataque é descontado nos pontos de vida.
+    */
+
     public void defend(int damage) {
         if(lifeScore == 0) return;
 
@@ -233,6 +251,10 @@ public class MilitaryUnit implements Militarys {
         }
     }
 
+    /*
+    Chamada quando uma unidade ataca a outra e passa para o metodo defend() os pontos de ataque, os quais reduzem
+    primeiro os pontos de blindagem se for um guerreiro, depois os pontos de defesa e por fim os pontos de vida
+    */
     public void attack(MilitaryUnit militaryUnit) {
         if(lifeScore <= 0 || militaryUnit.getLifeScore() <= 0) return;
 
@@ -241,10 +263,12 @@ public class MilitaryUnit implements Militarys {
         militaryUnit.defend(attackPointsEffect);
     }
 
+
     public boolean search(int id) {
         return this.id == id;
     }
 
+    //Imprimi as informações referente as unidades militares.
     public void print() {
         System.out.println("ID: " + id);
         System.out.println("Name: " + name);

@@ -53,6 +53,7 @@ public class Main {
                                     switch (option3) {
 
                                         case 1:
+                                            //Adiciona a unidade do tipo Guerreiro ao ArrayList
                                             System.out.println("######1.Guerreiro#####");
                                             unityToAdd = new Warrior(sc, idMilitaryUnit);
                                             units.add(unityToAdd);
@@ -61,6 +62,7 @@ public class Main {
                                             break;
 
                                         case 2:
+                                            //Adiciona a unidade do tipo Arqueiro (Arco e Flecha) ao ArrayList
                                             System.out.println("#####2.Arqueiro (Arco e Flecha)####");
                                             unityToAdd = new ArcherBowAndArrow(sc, idMilitaryUnit);
                                             units.add(unityToAdd);
@@ -69,6 +71,7 @@ public class Main {
                                             break;
 
                                         case 3:
+                                            //Adiciona a unidade do tipo Arqueiro (Besta)
                                             System.out.println("#######3.Arqueiro (Besta)######");
                                             unityToAdd = new ArcherCrossBow(sc, idMilitaryUnit);
                                             units.add(unityToAdd);
@@ -77,6 +80,7 @@ public class Main {
                                             break;
 
                                         case 4:
+                                            //Adiciona a unidade do tipo Feiticeiro
                                             System.out.println("#####4.Feiticeiro#####");
                                             unityToAdd = new Wizard(sc, idMilitaryUnit);
                                             units.add(unityToAdd);
@@ -94,6 +98,7 @@ public class Main {
                                     System.out.println("Não há unidades militares para remover");
                                     break;
                                 }
+
 
                                 MilitaryUnit unitToRemove = validateMilitaryUnit(sc, "Forneça o id da unidade militar para remover: ");
                                 units.remove(selectIdMilitaryUnits(unitToRemove.getId()));
@@ -140,7 +145,11 @@ public class Main {
                                     option5 = menuCreateArmy(sc);
                                     switch (option5) {
                                         case 1:
-
+                                            /*
+                                            Manda para o construtor da classe o limite de custo o qual é posteriormente mandando
+                                            para a variável auxLimitCost, de modo a ser possível manipular o seu valor sem
+                                            mudar o valor original.
+                                            */
                                             System.out.println("!#   1. Adicionar Unidade     #!");
                                             if (k == 0) {
                                                 limitCost = InputValidation.validateIntGT0(sc, "Limite de custos: ");
@@ -452,6 +461,9 @@ public class Main {
         return InputValidation.validateIntBetween(sc, "=> ", 0, 3);
     }
 
+    /*
+    Itera sobre todas as unidades militares disponíveis, procura pelo ID e retorna o índice.
+    */
     public static int selectIdMilitaryUnitsAvailable(int id) {
         for (int i = 0; i < availabilityUnits.size(); i++) {
             if(availabilityUnits.get(i).search(id)) {
@@ -462,6 +474,9 @@ public class Main {
         return -1;
     }
 
+    /*
+   Itera sobre todas as unidades militares, procura pelo ID e retorna o índice.
+   */
     public static int selectIdMilitaryUnits(int id) {
         for (int i = 0; i < units.size(); i++) {
             if(units.get(i).search(id)) {
@@ -472,6 +487,9 @@ public class Main {
         return -1;
     }
 
+    /*
+   Valida se o ID escolhido pelo utilizador pertence a alguma unidade militar existente.
+   */
     public static MilitaryUnit validateMilitaryUnit(Scanner sc, String message) {
         while (true) {
             try {
@@ -491,6 +509,9 @@ public class Main {
         }
     }
 
+    /*
+    Valida se o ID escolhido pelo utilizador pertence a alguma unidade militar existente.
+    */
     public static MilitaryUnit validateMilitaryUnitAvailable(Scanner sc, String message) {
         while (true) {
             try {
@@ -510,6 +531,9 @@ public class Main {
         }
     }
 
+    /*
+    Valida se o ID escolhido pelo utilizador pertence a alguma unidade militar vinculada ao exercíto 1.
+    */
     public static MilitaryUnit validateMilitaryUnitArmy1(Scanner sc, String message) {
         while (true) {
             try {
@@ -529,6 +553,9 @@ public class Main {
         }
     }
 
+    /*
+    Itera sobre todas as unidades militares do exercito 1, procura pelo ID e retorna o índice.
+    */
     public static int selectIdMilitaryUnitsArmy1(int id) {
         for (int i = 0; i < army1.getMilitaryUnit().size(); i++) {
             if(army1.getMilitaryUnit().get(i).search(id)) {
@@ -539,6 +566,9 @@ public class Main {
         return -1;
     }
 
+    /*
+    Valida se o ID escolhido pelo utilizador pertence a alguma unidade militar vinculada ao exercíto 2.
+    */
     public static MilitaryUnit validateMilitaryUnitArmy2(Scanner sc, String message) {
         while (true) {
             try {
@@ -558,6 +588,9 @@ public class Main {
         }
     }
 
+    /*
+    Itera sobre todas as unidades militares do exercito 2, procura pelo ID e retorna o índice.
+    */
     public static int selectIdMilitaryUnitsArmy2(int id) {
         for (int i = 0; i < army2.getMilitaryUnit().size(); i++) {
             if(army2.getMilitaryUnit().get(i).search(id)) {
