@@ -289,7 +289,7 @@ public class Main {
                     System.out.println("!#    3. Combates             #!");
                     int option7 = -1;
                     do {
-                        if (army1.getMilitaryUnit().isEmpty() || army2.getMilitaryUnit().isEmpty()) {
+                        if (army1 == null || army2 == null) {
                             System.out.println("Não há exércitos militares");
                             break;
                         }
